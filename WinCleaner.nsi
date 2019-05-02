@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.2"
+!define FILE_VERSION "0.0.0.3"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -34,7 +34,7 @@ Var Dialog
 Var Label1
 Var Button1
 Var Button2
-Var Buttonhttp
+Var Buttonh
 
 ;创建自定义界面
 Page custom nsDialogs "" "WinCleanup"
@@ -43,7 +43,8 @@ Page instfiles
 Section -Post
 	SetOutPath "$PLUGINSDIR"
 	File "README.md"
-	execshell open "$PLUGINSDIR"
+	call B1
+	call B2
 SectionEnd
 
 ;函数区段
@@ -71,8 +72,8 @@ Function nsDialogs
 	${NSD_OnClick} $Button2 B2
 	
 	${NSD_CreateButton} 10% 70% 80% 20% "更新地址"
-	Pop $Buttonhttp
-	${NSD_OnClick} $Buttonhttp Bhttp
+	Pop $Buttonh
+	${NSD_OnClick} $Buttonh Bhttp
 
 	nsDialogs::Show
 FunctionEnd
