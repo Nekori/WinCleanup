@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
-!define FILE_NAME "WinCleaner"
-!define FILE_VERSION "0.0.0.1"
+!define FILE_NAME "WinCleanup"
+!define FILE_VERSION "0.0.0.2"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -27,22 +27,23 @@ Icon "G:\ICON\洛克人ico\X.ico"
 RequestExecutionLevel user
 ;SilentInstall silent	;静默安装
 SetCompressor lzma
-BrandingText /TRIMright "Nekori：https://github.com/Nekori/WinCleaner"
+BrandingText /TRIMright "Nekori：https://github.com/Nekori/WinCleanup"
 
 ;分配变量
 Var Dialog
 Var Label1
 Var Button1
-;Var Button2
+Var Button2
 Var Buttonhttp
 
 ;创建自定义界面
-Page custom nsDialogs "" "WinCleaner"
+Page custom nsDialogs "" "WinCleanup"
 Page instfiles
 
 Section -Post
 	SetOutPath "$PLUGINSDIR"
 	File "README.md"
+	execshell open "$PLUGINSDIR"
 SectionEnd
 
 ;函数区段
@@ -65,6 +66,10 @@ Function nsDialogs
 	Pop $Button1
 	${NSD_OnClick} $Button1 B1
 
+	${NSD_CreateButton} 10% 45% 80% 20% "清理用户文件夹"
+	Pop $Button2
+	${NSD_OnClick} $Button2 B2
+	
 	${NSD_CreateButton} 10% 70% 80% 20% "更新地址"
 	Pop $Buttonhttp
 	${NSD_OnClick} $Buttonhttp Bhttp
@@ -81,10 +86,11 @@ Function B1 #清理回收站
 	RMDir /r "H:\$$RECYCLE.BIN"
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
-;Function B2
-;	ReadEnvStr $R1 userprofile
-;	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
-;FunctionEnd
+Function B2
+	ReadEnvStr $R1 userprofile
+	RMDir /r "$R1\.android"
+	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
+FunctionEnd
 Function Bhttp
-	ExecShell open "https://github.com/Nekori/WinCleaner/releases"
+	ExecShell open "https://github.com/Nekori/WinCleanup/releases"
 FunctionEnd
