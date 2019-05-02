@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.3"
+!define FILE_VERSION "0.0.0.4"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -32,9 +32,10 @@ BrandingText /TRIMright "Nekori：https://github.com/Nekori/WinCleanup"
 ;分配变量
 Var Dialog
 Var Label1
+Var Button0
 Var Button1
 Var Button2
-Var Buttonh
+Var Button3
 
 ;创建自定义界面
 Page custom nsDialogs "" "WinCleanup"
@@ -63,17 +64,21 @@ Function nsDialogs
 	Pop $Label1
 	${NSD_CreateLabel} 5% 5% 100% 10% "请选择组件"
 	
-	${NSD_CreateButton} 10% 20% 80% 20% "清理回收站"
+	${NSD_CreateButton} 10% 20% 80% 15% "清理回收站"
 	Pop $Button1
 	${NSD_OnClick} $Button1 B1
 
-	${NSD_CreateButton} 10% 45% 80% 20% "清理用户文件夹"
+	${NSD_CreateButton} 10% 40% 80% 15% "清理用户文件夹"
 	Pop $Button2
 	${NSD_OnClick} $Button2 B2
 	
-	${NSD_CreateButton} 10% 70% 80% 20% "更新地址"
-	Pop $Buttonh
-	${NSD_OnClick} $Buttonh Bhttp
+	${NSD_CreateButton} 10% 60% 80% 15% "清理Windows.old"
+	Pop $Button3
+	${NSD_OnClick} $Button3 B3
+	
+	${NSD_CreateButton} 10% 80% 80% 15% "更新地址"
+	Pop $Button0
+	${NSD_OnClick} $Button0 http
 
 	nsDialogs::Show
 FunctionEnd
@@ -92,6 +97,11 @@ Function B2
 	RMDir /r "$R1\.android"
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
-Function Bhttp
+Function B3
+	ReadEnvStr $R2 SYSTEMDRIVE
+	RMDir /r "$R2\Windows.old"
+	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
+FunctionEnd
+Function http
 	ExecShell open "https://github.com/Nekori/WinCleanup/releases"
 FunctionEnd
