@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.4"
+!define FILE_VERSION "0.0.0.5"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -26,8 +26,11 @@ InstallDir "$PLUGINSDIR"
 Icon "G:\ICON\洛克人ico\X.ico"
 RequestExecutionLevel user
 ;SilentInstall silent	;静默安装
-SetCompressor lzma
+SetCompressor /SOLID lzma
 BrandingText /TRIMright "Nekori：https://github.com/Nekori/WinCleanup"
+InstallButtonText "全部清理"	;替换默认安装按钮
+MiscButtonText "" "" "退出" ""  ;上一步 下一步 退出 关闭按钮文本
+ShowInstDetails show
 
 ;分配变量
 Var Dialog
@@ -46,6 +49,7 @@ Section -Post
 	File "README.md"
 	call B1
 	call B2
+	call B3
 SectionEnd
 
 ;函数区段
