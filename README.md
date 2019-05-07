@@ -1,8 +1,11 @@
 # WinCleanup
-当前没有release。[下载地址](https://github.com/Nekori/WinCleanup/releases)。  <br/>
+[下载地址](https://github.com/Nekori/WinCleanup/releases)。  <br/>
 程序加参数“ /S”可静默运行（大写）。
 
 #更新日志	（Change Log）：<br/>
+v0.0.0.6	（2019-05-07）<br>
+	清理用户文件夹下“\ansel\Filters”文件夹，仅删除空文件夹；
+	增加用户、系统及IE缓存的清理。
 v0.0.0.5	（2019-05-05）<br/>
 	按钮“install”改为“全部清理”；<br/>
 	按钮“cancel”改为“退出”；<br/>

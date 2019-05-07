@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.5"
+!define FILE_VERSION "0.0.0.6"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -39,6 +39,7 @@ Var Button0
 Var Button1
 Var Button2
 Var Button3
+Var Button4
 
 ;创建自定义界面
 Page custom nsDialogs "" "WinCleanup"
@@ -50,6 +51,7 @@ Section -Post
 	call B1
 	call B2
 	call B3
+	call B4
 SectionEnd
 
 ;函数区段
@@ -68,19 +70,23 @@ Function nsDialogs
 	Pop $Label1
 	${NSD_CreateLabel} 5% 5% 100% 10% "请选择组件"
 	
-	${NSD_CreateButton} 10% 20% 80% 15% "清理回收站"
+	${NSD_CreateButton} 10% 15% 80% 12% "清理回收站"
 	Pop $Button1
 	${NSD_OnClick} $Button1 B1
 
-	${NSD_CreateButton} 10% 40% 80% 15% "清理用户文件夹"
+	${NSD_CreateButton} 10% 30% 80% 12% "清理用户文件夹"
 	Pop $Button2
 	${NSD_OnClick} $Button2 B2
-	
-	${NSD_CreateButton} 10% 60% 80% 15% "清理Windows.old"
+
+	${NSD_CreateButton} 10% 45% 80% 12% "清理用户、系统及IE缓存"
 	Pop $Button3
 	${NSD_OnClick} $Button3 B3
+
+	${NSD_CreateButton} 10% 60% 80% 12% "清理Windows.old"
+	Pop $Button4
+	${NSD_OnClick} $Button4 B4
 	
-	${NSD_CreateButton} 10% 80% 80% 15% "更新地址"
+	${NSD_CreateButton} 10% 75% 80% 12% "更新地址"
 	Pop $Button0
 	${NSD_OnClick} $Button0 http
 
@@ -97,11 +103,19 @@ Function B1 #清理回收站
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
 Function B2
-	ReadEnvStr $R1 userprofile
-	RMDir /r "$R1\.android"
+;	ReadEnvStr $R1 userprofile
+	RMDir /r "$PROFILE\.android"
+	RMDir "$PROFILE\ansel\Filters"
+	RMDir "$PROFILE\ansel"
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
 Function B3
+	RMDir /r "$WINDIR\TEMP"
+	RMDir /r "$TEMP"
+	RMDir /r "$INTERNET_CACHE"
+	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
+FunctionEnd
+Function B4
 	ReadEnvStr $R2 SYSTEMDRIVE
 	RMDir /r "$R2\Windows.old"
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
