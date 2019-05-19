@@ -1,6 +1,6 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.7"
+!define FILE_VERSION "0.0.0.8"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
@@ -42,6 +42,7 @@ Var Button1
 Var Button2
 Var Button3
 Var Button4
+Var Button5
 
 ;创建自定义界面
 Page custom nsDialogs "" "WinCleanup"
@@ -90,6 +91,10 @@ Function nsDialogs
 	Pop $Button4
 	${NSD_OnClick} $Button4 B4
 	
+	${NSD_CreateButton} 55% 15% 40% 12% "360"
+	Pop $Button5
+	${NSD_OnClick} $Button5 B5
+	
 	${NSD_CreateButton} 5% 75% 90% 12% "更新地址"
 	Pop $Button0
 	${NSD_OnClick} $Button0 http
@@ -123,6 +128,12 @@ FunctionEnd
 Function B4
 	ReadEnvStr $R2 SYSTEMDRIVE
 	RMDir /r "$R2\Windows.old"
+	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
+FunctionEnd
+Function B5
+	RMDir /r "F:\360用户文件"
+	RMDir /r "F:\360SoftMgrGame"
+	RMDir /r "F:\360Downloads"
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
 Function http

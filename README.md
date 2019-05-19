@@ -5,9 +5,13 @@
 1、清空回收站“$RECYCLE.BIN”；<br/>
 2、用户文件夹下“.android”，“ansel\Filters”；<br/>
 3、缓存“WINTEMP”，“TEMP”，“INTERNET_CACHE”；<br/>
-4、旧版系统文件“Windows.old”<br/>
-<hr>
+4、旧版系统文件“Windows.old”；<br/>
+5、清理“F盘”根目录下的“360用户文件”，“360SoftMgrGame”，“360Downloads”文件夹。<br/>
+<hr/>
+
 #更新日志	（Change Log）：<br/>
+v0.0.0.8	（2019-05-19）<br/>
+	清理360位于“F盘”根目录下的“360用户文件”，“360SoftMgrGame”，“360Downloads”文件夹。<br/>
 v0.0.0.7	（2019-05-19）<br/>
 	清空回收站后刷新桌面；<br/>
 	判断32位or64位系统；<br/>
