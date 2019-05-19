@@ -1,11 +1,20 @@
 # WinCleanup
 [下载地址](https://github.com/Nekori/WinCleanup/releases)。  <br/>
-程序加参数“ /S”可静默运行（大写）。
-
+程序加参数“ /S”可静默运行（大写）。<br/>
+当前清理功能：<br/>
+1、清空回收站“$RECYCLE.BIN”；<br/>
+2、用户文件夹下“.android”，“ansel\Filters”；<br/>
+3、缓存“WINTEMP”，“TEMP”，“INTERNET_CACHE”；<br/>
+4、旧版系统文件“Windows.old”<br/>
+<hr>
 #更新日志	（Change Log）：<br/>
-v0.0.0.6	（2019-05-07）<br>
-	清理用户文件夹下“\ansel\Filters”文件夹，仅删除空文件夹；
-	增加用户、系统及IE缓存的清理。
+v0.0.0.7	（2019-05-19）<br/>
+	清空回收站后刷新桌面；<br/>
+	判断32位or64位系统；<br/>
+	调整界面，准备增加新按钮。<br/>
+v0.0.0.6	（2019-05-07）<br/>
+	清理用户文件夹下“\ansel\Filters”文件夹，仅删除空文件夹；<br/>
+	增加用户、系统及IE缓存的清理。<br/>
 v0.0.0.5	（2019-05-05）<br/>
 	按钮“install”改为“全部清理”；<br/>
 	按钮“cancel”改为“退出”；<br/>

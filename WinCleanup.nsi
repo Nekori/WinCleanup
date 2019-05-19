@@ -1,12 +1,14 @@
 ; 安装程序初始定义常量
 !define FILE_NAME "WinCleanup"
-!define FILE_VERSION "0.0.0.6"
+!define FILE_VERSION "0.0.0.7"
 !define PRODUCT_NAME "Windows Automatic Clean up"
 !define /date PRODUCT_VERSION "1.0.%y.%m%d"
 !define PRODUCT_PUBLISHER "Nekori"
 !include nsDialogs.nsh    ;窗口
 !include LogicLib.nsh
-;!include "x64.nsh"
+!include MUI.nsh
+!include "FileFunc.nsh"   ;为加入刷新桌面功能
+!include "x64.nsh"
 ;!include "InstallOptions.nsh"
 
 ;安装程序的版本信息
@@ -55,38 +57,40 @@ Section -Post
 SectionEnd
 
 ;函数区段
+Function .onInit
+	${If} ${RunningX64}
+    SetRegView 64
+	${Else}
+    SetRegView 32
+	${EndIf}
+FunctionEnd
+
 Function nsDialogs
-;	${If} ${RunningX64}
-;	      SetRegView 64
-;	${Else}
-;	       SetRegView 32
-;	${EndIf}
-	
 	nsDialogs::Create /NOUNLOAD 1018
 	Pop $Dialog
 		${If} $Dialog == error
 			Abort
 		${EndIf}
 	Pop $Label1
-	${NSD_CreateLabel} 5% 5% 100% 10% "请选择组件"
+	${NSD_CreateLabel} 5% 5% 100% 10% "请选择清理项目：清理完成后程序将自行退出"
 	
-	${NSD_CreateButton} 10% 15% 80% 12% "清理回收站"
+	${NSD_CreateButton} 5% 15% 40% 12% "回收站"
 	Pop $Button1
 	${NSD_OnClick} $Button1 B1
 
-	${NSD_CreateButton} 10% 30% 80% 12% "清理用户文件夹"
+	${NSD_CreateButton} 5% 30% 40% 12% "用户文件夹"
 	Pop $Button2
 	${NSD_OnClick} $Button2 B2
 
-	${NSD_CreateButton} 10% 45% 80% 12% "清理用户、系统及IE缓存"
+	${NSD_CreateButton} 5% 45% 40% 12% "用户、系统及IE缓存"
 	Pop $Button3
 	${NSD_OnClick} $Button3 B3
 
-	${NSD_CreateButton} 10% 60% 80% 12% "清理Windows.old"
+	${NSD_CreateButton} 5% 60% 40% 12% "Windows.old"
 	Pop $Button4
 	${NSD_OnClick} $Button4 B4
 	
-	${NSD_CreateButton} 10% 75% 80% 12% "更新地址"
+	${NSD_CreateButton} 5% 75% 90% 12% "更新地址"
 	Pop $Button0
 	${NSD_OnClick} $Button0 http
 
@@ -100,6 +104,7 @@ Function B1 #清理回收站
 	RMDir /r "F:\$$RECYCLE.BIN"
 	RMDir /r "G:\$$RECYCLE.BIN"
 	RMDir /r "H:\$$RECYCLE.BIN"
+	${RefreshShellIcons}
 	SendMessage $HWNDPARENT ${WM_CLOSE} 0 0
 FunctionEnd
 Function B2
